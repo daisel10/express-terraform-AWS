@@ -1,18 +1,18 @@
 import express from 'express'
 
-import auth from './routes/auth/auth.controler'
+import auth from './routes/apiv1/auth/auth.controler'
 
 const app = express()
 
 app.use(express.json())
 
 
-app.get('/ping',(_req, res)=>{
-    console.log('someone pinged here!!');
+app.get('/ping',(_req, res, _next)=>{
+    
     res.send('pong');
 })
 
-app.use('/api', auth)
+app.use('/apiv1', auth)
 
 
 

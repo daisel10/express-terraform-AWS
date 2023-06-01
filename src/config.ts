@@ -4,7 +4,8 @@ config();
 
 const configEnv = {
     api :{
-        port: process.env.API_PORT || 3000
+        port: process.env.API_PORT || 3000,
+        jwt: process.env.JWT_SECRET || 'dfghjkoiuytrvbjuytfvb2345678uhfder'
     },
     mysql: {
         host: process.env.MYSQL_HOST || 'localhost',
