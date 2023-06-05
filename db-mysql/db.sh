@@ -1,14 +1,26 @@
 #!/bin/bash
 
 # Ruta al archivo .sql a ejecutar
-SQL_FILES=(".././db.sql")
+sql_file=".././db.sql"
 
-# Comando para ingresar a MySQL y ejecutar el script
+# Verifica si el archivo .sql existe
+if [ -f "$sql_file" ]; then
+    # Genera el script SQL leyendo el contenido del archivo
+    sql_script=$(cat "$sql_file")
 
-for file in "${SQL_FILES[@]}"
-do
+    # Guarda el script SQL en un archivo temporal
+    temp_file=$(mktemp)
+    echo "$sql_script" > "$temp_file"
 
-    echo "Ejecutando archivo: $file"
-    MYSQL_DATABASE=${MYSQL_DATABASE} mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "source $file"
+    # Reemplaza variables de entorno en el archivo temporal
+    sed -i "s/{{DB_DATABASE}}/${MYSQL_DATABASE}/g" "$temp_file"
 
-done
+    # Ejecuta el script SQL en MySQL
+    mysql -u "${MYSQL_USER}" -p"${MYSQL_PASSWORD}" < "$temp_file"
+
+    # Elimina el archivo temporal
+    rm "$temp_file"
+else
+    echo "El archivo $sql_file no existe."
+fi
+
