@@ -14,6 +14,7 @@ app.get('/ping', async (_req, res, _next)=>{
    res.json({result})
 })
 
+
 app.use('/apiv1', auth)
 
 
