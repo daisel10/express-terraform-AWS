@@ -1,10 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
+import { singupAuthModel } from '../../../common/model/auth.model';
 
-export async function singup_auth(_req:Request, res:Response, _next:NextFunction){
+export async function singup_auth(req:Request, res:Response, _next:NextFunction){
     try {
+        const { name, password, email } = req.body;
+
+        const result = await singupAuthModel(name, password, email)
         
+        return res.json({result})
+
     } catch (error) {
-        res.status(500).json({message:"something goes wrong"})
+        console.log(error)
+        return res.status(500).json({message:"something goes wrong"})
     }
 }
 
