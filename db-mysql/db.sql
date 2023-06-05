@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS app;
-USE app;
+CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
+USE ${MYSQL_DATABASE};
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS user (
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS user (
   name VARCHAR(50) NOT NULL,
   email VARCHAR(50) NOT NULL,
   contrasena VARCHAR(100) NOT NULL,
-  UNIQUE (nombre),
+  UNIQUE (name),
   UNIQUE (email)
 );
 
