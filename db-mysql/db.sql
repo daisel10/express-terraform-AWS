@@ -1,5 +1,8 @@
-CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};
-USE ${MYSQL_DATABASE};
+SET @data_base := '${MYSQL_DATABASE}';
+
+
+CREATE DATABASE IF NOT EXISTS @data_base;
+USE @data_base;
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS user (
