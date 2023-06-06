@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import bcrypt from "bcrypt";
 
-import { singupAuthModel, singinAuthModel } from '../../../common/model/auth.model';
+import { singupAuthModel, singinAuthModel, putAuthModel, deletedAuthModel } from '../../../common/model/auth.model';
 import { jwt_sign } from '../../../common/lib/jwt';
+import { comparePassword, hashPassword } from '../../../common/lib/bcrypt';
 
 
 export async function singup(req:Request, res:Response, _next:NextFunction){
     try {
         const { name, password, email } = req.body;
 
-        const passwordHash = await bcrypt.hash(password, 10)
+        const passwordHas = await hashPassword(password)
 
-        const result = await singupAuthModel(name, passwordHash, email)
+        const result = await singupAuthModel(name, passwordHas, email)
 
         const jwt = jwt_sign({name,email})
         return res.json({result, jwt})
@@ -28,18 +28,17 @@ export async function singin(req:Request, res:Response, _next:NextFunction){
     try {
         const { name, email, password } = req.body;
 
-        const {id, name1, email1, password1} = await singinAuthModel(name, email)
-
-        const compare = await bcrypt.compare(password, password1).then(function(result) {
-            result = true
-            return result
-        });
-
-        console.log(compare)
+        const request = await singinAuthModel(name, email)
         
-        if ( !!await (bcrypt.compare(password, password1))) return res.status(500).json({message:"something goes wrong", })
+        
+        const compare = await comparePassword(password, request.password)
+        if (compare) return res.status(400).json({message:"the name, email or password is bad", })
 
-        const jwt = jwt_sign({id,name1,email1})
+
+        const data_jwt= {id: request.id, name: request.name, email:request.email}
+
+        const jwt = jwt_sign(data_jwt)
+
         return res.json({jwt})
 
     } catch (error:any) {
@@ -50,18 +49,35 @@ export async function singin(req:Request, res:Response, _next:NextFunction){
     }
 }
 
-export async function put_auth(_req:Request, res:Response, _next:NextFunction){
+export async function put_auth(req:Request, res:Response, _next:NextFunction){
     try {
+        const { name, email, password } = req.body;
+        const passwordHash = await hashPassword(password)
+
+        const result = await putAuthModel(name, passwordHash, email)
+
+        const jwt = jwt_sign({name,email})
+        return res.json({result, jwt})
         
     } catch (error) {
-        res.status(500).json({message:"something goes wrong"})
+        return res.status(500).json({message:"something goes wrong"})
     }
 }
 
-export async function deleted_auth(_req:Request, res:Response, _next:NextFunction){
+export async function deleted_auth(req:Request, res:Response, _next:NextFunction){
     try {
-        
+        const { name, email, password } = req.body;
+
+        const request = await singinAuthModel(name, email)
+
+        const compare = await comparePassword(password, request.password)
+        if (compare) return res.status(400).json({message:"the name, email or password is bad", })
+
+        await deletedAuthModel(name, email)
+
+        return res.status(200).json({message:"the user was deleted"})
+
     } catch (error) {
-        res.status(500).json({message:"something goes wrong"})
+        return res.status(500).json({message:"something goes wrong"})
     }
 }

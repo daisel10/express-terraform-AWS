@@ -1,10 +1,13 @@
 import express from 'express'
+import cors from "cors";
 
 import auth from './routes/apiv1/auth/auth.controler'
 
 import pool from './common/model/bd.model'
 
+
 const app = express()
+
 
 app.use(express.json())
 
@@ -14,10 +17,7 @@ app.get('/ping', async (_req, res, _next)=>{
    res.json({result})
 })
 
-
-app.use('/apiv1', auth)
-
-
+app.use('/apiv1',cors(), auth)
 
 
 export default app;
