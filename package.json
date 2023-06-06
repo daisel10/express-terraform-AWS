@@ -6,7 +6,7 @@
   "main": "src/bin/www.ts",
   "scripts": {
     "dev": "ts-node-dev src/bin/www.ts",
-    "start": "node build/index.js",
+    "start": "node build/bin/www.js",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
