@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { singin_auth, singup_auth, put_auth, deleted_auth } from "./auth.services";
+import { singin, singup, put_auth, deleted_auth } from "./auth.services";
 
 const router = Router();
 
@@ -8,8 +8,8 @@ router.get('/auth',(_req, res)=>{
 });
 router.put('/auth/:id',put_auth);
 router.delete('/auth/:id',deleted_auth);
-router.post('/auth/singup',singup_auth);
+router.post('/auth/singup',singup);
 
-router.post('/auth/singin',singin_auth);
+router.post('/auth/singin',singin);
 
 export default router

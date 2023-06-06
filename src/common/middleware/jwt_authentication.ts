@@ -1,9 +1,8 @@
 
-import jwt  from 'jsonwebtoken'
+
 import { Request, Response, NextFunction } from 'express'
 
-
-import configEnv from '../../config';
+import { jwt_verification } from '../lib/jwt';
 
 
 export function jwt_authentification(req:Request, res:Response, next:NextFunction){
@@ -15,7 +14,7 @@ export function jwt_authentification(req:Request, res:Response, next:NextFunctio
       .json({ error: "A token is required for authentication " });
       }
       try {
-       const jsonCode = jwt.verify(jwtToken, configEnv.api.jwt )
+       const jsonCode = jwt_verification(jwtToken)
        req.body.user = jsonCode;
         
       } catch (error) {
@@ -23,5 +22,4 @@ export function jwt_authentification(req:Request, res:Response, next:NextFunctio
       }
       return next();
 }
-
 
