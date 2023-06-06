@@ -6,13 +6,13 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - API_PORT=3000
-      - JWT_SECRET='wrsdtrfygubhiojipjiugyftdcguh'
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=admit
-      - DB_DATABASE=app
+      - API_PORT = 3000
+      - JWT_SECRET = 'wrsdtrfygubhiojipjiugyftdcguh'
+      - DB_HOST = db
+      - DB_PORT = 3306
+      - DB_USER = daisel
+      - DB_PASSWORD = admit
+      - DB_DATABASE = app
     depends_on:
       - db
     command: npm run tsc && npm start
