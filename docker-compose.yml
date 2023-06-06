@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    build: ./.docker 
+    build: './'
     ports:
       - "3000:3000"
     environment:
@@ -10,9 +10,9 @@ services:
       - JWT_SECRET = 'wrsdtrfygubhiojipjiugyftdcguh'
       - DB_HOST = db
       - DB_PORT = 3306
-      - DB_USER = daisel
-      - DB_PASSWORD = admit
-      - DB_DATABASE = app
+      - DB_USER = ${DB_USER}
+      - DB_PASSWORD = ${DB_PASSWORD}
+      - DB_DATABASE = ${DB_DATABASE}
     depends_on:
       - db
     command: npm run tsc && npm start
