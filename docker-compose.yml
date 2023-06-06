@@ -2,20 +2,22 @@ version: '3.9'
 
 services:
   app:
-    build: './'
+    build:
+     context: .
+     dockerfile: ./docker/dockerfile
     ports:
       - "3000:3000"
     environment:
-      - API_PORT = 3000
-      - JWT_SECRET = 'wrsdtrfygubhiojipjiugyftdcguh'
-      - DB_HOST = db
-      - DB_PORT = 3306
-      - DB_USER = ${DB_USER}
-      - DB_PASSWORD = ${DB_PASSWORD}
-      - DB_DATABASE = ${DB_DATABASE}
+       API_PORT: 3000
+       JWT_SECRET: 'wrsdtrfygubhiojipjiugyftdcguh'
+       DB_HOST: 'db'
+       DB_PORT: 3306
+       DB_USER: ${DB_USER}
+       DB_PASSWORD: ${DB_PASSWORD}
+       DB_DATABASE: ${DB_DATABASE}
     depends_on:
       - db
-    command: npm run tsc && npm start
+   
   db:
     image: mysql
     container_name: db_express

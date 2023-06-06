@@ -1,0 +1,23 @@
+# Usa la imagen base de Node.js versión 18
+FROM node:18
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copia los archivos de configuración
+COPY package.json tsconfig.json ./
+
+# Instala las dependencias
+RUN npm install
+
+# Copia el resto de los archivos del proyecto
+COPY . .
+
+# Compila el código TypeScript
+RUN npm run build
+
+# Expone el puerto en el que la aplicación escucha
+EXPOSE 3000
+
+# Define el comando para iniciar la aplicación
+CMD ["npm", "start"]
