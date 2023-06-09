@@ -62,4 +62,37 @@ typings/
 # next.js build output
 .next
 
-# build 
+# terraform
+# Archivos de estado de Terraform
+.terraform/
+
+# Archivos de respaldo
+*.tfstate.backup
+
+# Archivos de registro de Terraform
+terraform.log
+
+# Variables de entorno de Terraform
+*.tfvars
+
+# Archivos de configuración de Terraform
+terraform.tfstate
+terraform.tfstate.backup
+
+# Archivos de bloqueo de Terraform
+*.tflock
+
+# Archivos de ejecución de Terraform
+*.tfplan
+
+# Archivos de configuración local (por ejemplo, para entornos de desarrollo)
+.terraformrc
+
+# Directorio de plugins de Terraform
+terraform.d/plugins/
+
+# Directorio de caché de Terraform
+.terraform/environment/
+
+# Archivos de configuración de Visual Studio Code para Terraform
+.vscode/settings.json
